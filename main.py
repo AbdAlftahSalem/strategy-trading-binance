@@ -5,10 +5,19 @@ import tickers
 
 tickerString = ""
 tickers = tickers.getTicker(150)
+localList = [{"1hFrameWork": []}, {"4hFrameWork": []}, {"1dFrameWork": []}]
+frames = ["1h", "4h", "1d"]
 for i in range(len(tickers)):
-    boost.boost(stratgy.strategy, tickers[i], "1h", 100)
-for i in stratgy.tickerList:
-    tickerString += "❇" + i["ticker"] + "\n\n   🟢High: " + str(i["high"]) + "\n   🔴Low: " + str(
-        i["low"]) + "\n\n\n"
+    for j in range(len(frames)):
+        boost.boost(stratgy.strategy, tickers[i], frames[j], 100)
+        localList[j][f'{frames[j]}FrameWork'] = stratgy.tickerList
+        stratgy.tickerList = []
+
+for i in range(len(localList)):
+    data = localList[i][f'{frames[i]}FrameWork']
+    for j in data:
+        tickerString += "\n\n" + "❇" + j["ticker"] + "\n✳Frame : " + j["frameWork"] + "\n\n   🟢High: " + str(
+            j["DCA1"]["high"]) + "\n   🔴Low: " + str(
+            j["DCA1"]["low"]) + "\n\n   🟢High: " + str(j["DCA2"]["high"]) + "\n   🔴Low: " + str(
+            j["DCA2"]["low"])
 send_to_tele.sentToTelegram(f'⏰⏰System will search in⏰⏰:\n\n{tickerString}')
-# stratgy.strategy("BTCUSDT", "4h", 100)

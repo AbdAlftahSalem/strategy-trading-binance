@@ -13,6 +13,7 @@ def highRankTicker(rank):
 def binanceTicker():
     x = requests.get(binanceTickerAPI)
     x = x.json()
+    print(x)
     for i in x:
         if i["symbol"].endswith("USDT"):
             allBinanceTickers.append(i["symbol"])

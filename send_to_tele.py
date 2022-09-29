@@ -1,6 +1,6 @@
 import requests
 
-# import const
+import const
 
 
 def sentToTelegram(msg):
@@ -9,4 +9,3 @@ def sentToTelegram(msg):
 
     sendMessage = 'https://api.telegram.org/bot' + const.token + '/sendMessage?chat_id=' + const.chatId2 + '&text=' + msg
     requests.get(sendMessage)
-
